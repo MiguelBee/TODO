@@ -4,11 +4,20 @@ RSpec.describe TasksController, type: :controller do
 	describe "tasks#index" do
 		it "should properly list out all the tasks in the db" do
 			task1 = FactoryGirl.create(:task)
-			taks2 = FactoryGirl.create(:task)
+			task2 = FactoryGirl.create(:task)
+			task1.update_attributes(title: "something")
 			get :index
 			expect(response).to have_http_status :success
 			response_value = ActiveSupport::JSON.decode(@response.body)
 			expect(response_value.count).to eq(2)
+			response_ids = []
+			# response_value.each do |task|
+			# 	response_ids << task["id"]
+			#following code does the same as above
+			response_ids = response_value.collect do |task|
+				task["id"]
+			 end
+			expect(response_ids).to eq([task1.id, task2.id])
 		end
 	end
 
