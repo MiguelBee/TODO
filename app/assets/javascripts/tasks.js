@@ -12,7 +12,7 @@
 				checkedStatus +
 				'><label>' +
 				task.title +
-				'><label></div></li>';
+				'<label></div></li>';
 
 			return liElement;
 		}
